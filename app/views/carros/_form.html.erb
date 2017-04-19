@@ -1,0 +1,44 @@
+<%= form_for(carro) do |f| %>
+  <% if carro.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(carro.errors.count, "error") %> prohibited this carro from being saved:</h2>
+
+      <ul>
+      <% carro.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %>
+    <%= f.text_field :nome %>
+  </div>
+
+  <div class="field">
+    <%= f.label :modelo %>
+    <%= f.text_field :modelo %>
+  </div>
+
+  <div class="field">
+    <%= f.label :marca %>
+    <%= f.text_field :marca %>
+  </div>
+
+  <div class="panel-body col-sm-10 col-sm-offset-1">
+        <div class="list-group">
+          <div class="list-group-item"><strong>Perfis Compativeis</strong></div>
+          <%= f.fields_for :filhos do |builder| %>
+            <%= render "carro_compativel_itens/carro_compativel_item_fields", f: builder %>
+          <% end %>
+          <div class="list-group-item add-valor">
+            <%= link_to_add_fields 'Adicionar', f, :filhos, data: {insert_before: '.add-valor'} %>
+          </div>
+        </div>
+  </div> 
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
